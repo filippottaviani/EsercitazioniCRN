@@ -8,17 +8,16 @@ La presente repository raccoglie le esercitazioni MATLAB realizzate nel contesto
     - Commenti su esistenza, unicità e completezza delle soluzioni  
 4. **Analisi degli equilibri circuito con diodo tunnel**  
 5. **Analisi sistemi massa-molla-smorzatore**  
-   - Casi:  
-     - Lineare e non-lineari:  
-       - \( M \ddot{x} = -k_1 x \pm k_2 x^3 - \beta_1 \dot{x} - \beta_2 \dot{x}^3 \)  
-       - \( M \ddot{x} = -k_1 x + k_2 x^3 - \beta_1 \dot{x} + \beta_2 \dot{x}^3 \)  
+   - Casi lineari e non-lineari:  
+       - $M \ddot{x} = -k_1 x \pm k_2 x^3 - \beta_1 \dot{x} - \beta_2 \dot{x}^3$  
+       - $M \ddot{x} = -k_1 x + k_2 x^3 - \beta_1 \dot{x} + \beta_2 \dot{x}^3$  
 6. **Controllo adattativo sistema scalare**  
-   - \( \dot{x} = a x + u \)  
+   -  $\dot{x} = a x + u$  
    - Stabilizzazione e inseguimento di traiettoria  
    - Analisi e simulazioni  
 7. **Controllo Robot planare a 2 link**  
-   - Regolazione spazio dei giunti e operativo  
-   - Tuning dei guadagni per assegnazione del tasso di convergenza locale  
-   - Inseguimento di traiettorie nello spazio dei giunti e operativo (parametri noti)  
-   - Inseguimento di traiettoria adattativo nello spazio dei giunti  
+    1. Regolazione spazio dei giunti e operativo  
+    2. Tuning dei guadagni per assegnazione del tasso di convergenza locale  
+    3. Inseguimento di traiettorie nello spazio dei giunti e operativo (parametri noti)  
+    4. Inseguimento di traiettoria adattativo nello spazio dei giunti  
 8. **Inseguimento di traiettoria in posizione per un robot uniciclo** 
