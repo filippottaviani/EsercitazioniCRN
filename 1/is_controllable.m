@@ -17,4 +17,5 @@ function controllable = is_controllable(A, B)
         controllable = false;
     else
         controllable = true;
+    end
 end

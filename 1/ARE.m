@@ -27,12 +27,15 @@ end
 
 % (E,A) deve essere controllabile
 if ~is_observable(E, A)
-    error('ARE non risolvibile: la coppia (A, B) non è controllabile!');
+    error('ARE non risolvibile: la coppia (A, B) non è osservabile!');
 end
 
 % Soluzione della ARE
-disp('SOLUZIONE EQUAZIONE DIFFERENZIALE DI RICCATI (DRE)')
 P_through_DRE = solve_ARE_through_DRE(A, B, Q, R);
 P_shur = solve_ARE_shur(A, B, Q, R)
 
-disp(P)
+disp('SOLUZIONI EQUAZIONE ALGEBRICA DI RICCATI (ARE)\n')
+disp('1. Attraverso la soluzione stazionaria della DRE')
+disp('P = ', P_through_DRE)
+disp('\n2. Attraverso il calcolo del complemento di Shur')
+disp('P = ', P_shur)
