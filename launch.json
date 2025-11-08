@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "OctaveDebugger",
+            "request": "launch",
+            "name": "Esegui file Octave",
+            "program": "${file}"
+        }
+    ]
+}
