@@ -1,4 +1,6 @@
 function [P_sol, t] = DRE(A, B, Q, R, P_tf, T)
+    [n, ~] = size(A);
+    
     % Vettorizzo la condizione finale P(T)
     P_tf_vec = P_tf(:);
 

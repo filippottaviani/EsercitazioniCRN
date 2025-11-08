@@ -6,8 +6,8 @@ A = [-1 2; -3 -4];
 B = [1; 0];
 
 % 
-E = eye(2)
-Q = E'E;
+E = eye(2);
+Q = E'*E;
 R = 1;
 
 % Q deve essere semidefinita positiva
@@ -30,7 +30,7 @@ if ~is_observable(E, A)
     error('ARE non risolvibile: la coppia (A, B) non è osservabile!');
 end
 
-% Soluzione della ARE
+% Soluzioni della ARE
 P_through_DRE = solve_ARE_through_DRE(A, B, Q, R);
 P_shur = solve_ARE_shur(A, B, Q, R)
 
