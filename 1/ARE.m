@@ -1,5 +1,9 @@
-% Test della funzione DRE
-addpath('C:\Users\FilippoOttaviani\OneDrive - Università degli Studi di Perugia\Università\Magistrale\Controllo Robusto e Nonlineare\Esercitazioni\1')
+clear all;
+clc;
+close all;
+
+addpath('funzioni','1')
+pkg load control
 
 % Definizione del sistema
 A = [-1 2; -3 -4];
@@ -25,7 +29,7 @@ if ~is_controllable(A, B)
     error('ARE non risolvibile: la coppia (A, B) non è controllabile!');
 end
 
-% (E,A) deve essere controllabile
+% (E,A) deve essere osservabile
 if ~is_observable(E, A)
     error('ARE non risolvibile: la coppia (A, B) non è osservabile!');
 end
@@ -34,8 +38,8 @@ end
 P_through_DRE = solve_ARE_through_DRE(A, B, Q, R);
 P_shur = solve_ARE_shur(A, B, Q, R)
 
-disp('SOLUZIONI EQUAZIONE ALGEBRICA DI RICCATI (ARE)\n')
-disp('1. Attraverso la soluzione stazionaria della DRE')
+fprintf('\nSOLUZIONI EQUAZIONE ALGEBRICA DI RICCATI (ARE)\n')
+fprintf('\n1. Attraverso la soluzione stazionaria della DRE')
 disp('P = ', P_through_DRE)
-disp('\n2. Attraverso il calcolo del complemento di Shur')
+fprintf('\n2. Attraverso il calcolo del complemento di Shur')
 disp('P = ', P_shur)
