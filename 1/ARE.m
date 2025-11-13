@@ -5,7 +5,7 @@ close all;
 addpath('funzioni','1')
 pkg load control
 
-% Definizione del sistema
+% Definisco il sistema
 A = [-1 2; -3 -4];
 B = [1; 0];
 

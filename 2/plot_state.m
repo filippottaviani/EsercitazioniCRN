@@ -1,7 +1,7 @@
+% Questa funzione disegna i grafici della simulazione
 function plot_state(x_real, x_hat, t, err)
-    % Questa funzione disegna i grafici della simulazione
 
-    % Plot Stati Reali
+    % Plot stati reali
     figure(1);
     subplot(2, 1, 1);
     plot(t, x_real(:, 1), 'b-', 'LineWidth', 1.5);
@@ -23,7 +23,7 @@ function plot_state(x_real, x_hat, t, err)
     legend('Velocità Carrello (x\_dot)', 'Vel. Angolare (theta\_dot)');
     grid on;
 
-    % Plot Confronto Reale vs Stimato
+    % Plot confronto reale vs stimato
     figure(2);
     subplot(2, 2, 1);
     plot(t, x_real(:, 1), 'b', t, x_hat(:, 1), 'b--');
@@ -49,7 +49,7 @@ function plot_state(x_real, x_hat, t, err)
     legend('Reale', 'Stimato');
     grid on;
 
-    % Plot Errore di Stima
+    % Plot errore di stima
     figure(3);
     plot(t, err(:, 1), t, err(:, 2), t, err(:, 3), t, err(:, 4));
     title('Errore di Stima (e = x - x_hat)');
