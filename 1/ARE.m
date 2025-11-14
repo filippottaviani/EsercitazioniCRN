@@ -40,6 +40,6 @@ P_shur = solve_ARE_shur(A, B, Q, R)
 
 fprintf('\nSOLUZIONI EQUAZIONE ALGEBRICA DI RICCATI (ARE)\n')
 fprintf('\n1. Attraverso la soluzione stazionaria della DRE')
-disp('P = ', P_through_DRE)
+disp(P_through_DRE)
 fprintf('\n2. Attraverso il calcolo del complemento di Shur')
-disp('P = ', P_shur)
+disp (P_shur)

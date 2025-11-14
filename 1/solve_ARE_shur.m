@@ -16,18 +16,24 @@ function P = solve_ARE_shur(A, B, Q, R)
     % in modo che gli autovalori con parte reale negativa (stabili)
     % appaiano nel blocco in alto a sinistra di T.
 
-    [U, ~] = schur(H, 'stable');
-
-
-    % --- 4. Estrazione della soluzione ---
+    [U, T] = schur(H);
     
+    % Calcolo degli autovalori dalla matrice di Schur
+    eigvals = diag(T);
+
+    % Selezione degli autovalori stabili (parte reale negativa)
+    n = size(A, 1);
+    stable_idx = (real(eigvals) < -1e-10);
+
+    % Ordino gli indici in modo che gli autovalori stabili siano primi
+    [~, idx] = sort(real(eigvals));
+    select = zeros(1, 2*n);
+    select(idx(1:n)) = 1;
+
+    % Riordino della decomposizione di Schur
+    [U, T] = ordschur(U, T, select);
+
     % La matrice U (2n x 2n) viene partizionata in 4 blocchi n x n:
-    % U = [U11, U12;
-    %      U21, U22]
-    %
-    % Le prime n colonne di U [U11; U21] formano una base
-    % per il sottospazio stabile di H.
-    [n, ~] = size(A);
     U11 = U(1:n, 1:n);
     U21 = U(n+1:2*n, 1:n);
 

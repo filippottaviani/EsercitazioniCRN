@@ -75,7 +75,7 @@ disp(poles_controller);
 % Prendiamo la parte reale del polo dominante (più lento) del controllore
 polo_dominante = max(real(poles_controller));
 
-% Scegliamo poli per l'osservatore che siano ~5 volte più veloci
+% Scegliamo poli per l'osservatore che siano fino a 5 volte più veloci
 % (più a sinistra nel piano complesso)
 P_obs = [
     polo_dominante * 2,
