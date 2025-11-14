@@ -1,21 +1,9 @@
 function P = solve_ARE_shur(A, B, Q, R)
-    % --- 2. Costruzione della matrice Hamiltoniana ---
-    %
-    %    H = [ A     -B*inv(R)*B' ]
-    %        [ -Q        -A'      ]
-    %
-    
     % Costruisco la matrice Hamiltoniana 2n x 2n
     H = [ A, -B * (R \ B');
          -Q, -A'];
     
-    % --- 3. Calcolo del sottospazio stabile ---
-
-    % Usiamo la decomposizione di Schur ordinata ('stable')
-    % Questo riordina la matrice T (Schur) e la matrice U (trasformazione)
-    % in modo che gli autovalori con parte reale negativa (stabili)
-    % appaiano nel blocco in alto a sinistra di T.
-
+    % Calcolo del sottospazio stabile
     [U, T] = schur(H);
     
     % Calcolo degli autovalori dalla matrice di Schur
@@ -41,7 +29,5 @@ function P = solve_ARE_shur(A, B, Q, R)
     P = U21 / U11; 
 
     % La soluzione P deve essere simmetrica. Piccoli errori numerici
-    % possono renderla molto leggermente asimmetrica.
-    % Forziamo la simmetria calcolando (P + P') / 2.
     P = (P + P') / 2;
 end
