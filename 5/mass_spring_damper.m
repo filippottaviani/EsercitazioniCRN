@@ -3,6 +3,7 @@ clear all;
 close all;
 
 pkg load control;
+pkg load python3-simpy
 
 addpath('5')
 
