@@ -48,17 +48,17 @@ cond_iniziali = [
     0.1, 0.1
 ];
 
-% Caso 1: lineare
+% Analisi caso 1
 P_linear = [0, 0];
 analyze_system(1, 'Caso 1: Sistema Lineare', J_linear, P_linear);
 plot_phase_portrait(1, f_linear, cond_iniziali);
 
-% Caso 2: non lineare (molla "ammorbidente")
+% Analisi caso 2
 P_soft = [0, 0];
 analyze_system(2, 'Caso 2: Molla "Ammorbidente" (Softening)', J_soft, P_soft);
 plot_phase_portrait(2, f_soft, cond_iniziali);
 
-% Caso 3: non lineare (molla "indurente")
+% Analisi caso 3
 P_hard = [
     0, 0;
     sqrt(k1/k2), 0;
