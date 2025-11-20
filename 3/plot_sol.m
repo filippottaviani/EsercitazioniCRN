@@ -1,5 +1,6 @@
 % Funzione per plottare le soluzioni numeriche e analitiche
 function plot_soluzioni(fig_num, titolo, t_num, x_num, t_an, x_an)
+    graphics_toolkit("gnuplot"); # fix per i grafici
 
     % Genero un grafico di confronto tra soluzione numerica e analitica.
     figure(fig_num);

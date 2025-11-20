@@ -1,7 +1,7 @@
 function y = simulate_system(A, B, C, K, L)
     % Ora simuliamo il sistema combinato (8 stati).
-    A_cc = [ A,         -B*K;
-            L*C,   A - L*C - B*K];
+    A_cc = [ A, -B*K;
+            L*C, A - B*K - L*C];
 
     % Non ci sono ingressi esterni
     B_cc = zeros(8, 1);
@@ -39,4 +39,4 @@ function y = simulate_system(A, B, C, K, L)
 
     % Plot dei Risultati
     plot_state(x_real, x_hat, t, err)
-endfunction
+end

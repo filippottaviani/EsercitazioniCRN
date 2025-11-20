@@ -72,19 +72,18 @@ poles_controller = eig(A - B*K);
 disp('Poli controllore (A-BK):');
 disp(poles_controller);
 
-% Prendiamo la parte reale del polo dominante (più lento) del controllore
-polo_dominante = max(real(poles_controller));
+% Prendo la parte reale del polo dominante (più lento) del controllore
+dominant_pole = max(real(poles_controller));
 
-% Scegliamo poli per l'osservatore che siano fino a 5 volte più veloci
-% (più a sinistra nel piano complesso)
+% Scelgo poli per l'osservatore che siano fino a 5 volte più veloci
 P_obs = [
-    polo_dominante * 2,
-    polo_dominante * 3,
-    polo_dominante * 4,
-    polo_dominante * 5
+    dominant_pole * 2,
+    dominant_pole * 3,
+    dominant_pole * 4,
+    dominant_pole * 5
     ];
 
-% Usiamo 'place' per trovare L.
+% Uso 'place' per trovare L.
 L_transpose = place(A', C', P_obs);
 L = L_transpose'; % Matrice di guadagno dell'osservatore
 
@@ -96,5 +95,13 @@ poles_observer = eig(A - L*C);
 disp('Poli osservatore (A-LC):');
 disp(poles_observer);
 
-%% Simulazione del sistema completo (Regolatore + Osservatore)
+# Verifico la stabilità del sistema
+tol = -1e-6 # per evitare errori di arrotondamento
+if max(real(poles_controller)) < tol && max(real(poles_observer)) < tol
+    disp('Il sistema a ciclo chiuso è stabile.')
+else
+    error('Il sistema a ciclo chiuso non è stabile!')
+end
+
+%% Simulo il sistema completo (Regolatore + Osservatore)
 simulate_system(A, B, C, K, L)

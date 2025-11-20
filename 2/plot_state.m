@@ -1,5 +1,6 @@
 % Questa funzione disegna i grafici della simulazione
 function plot_state(x_real, x_hat, t, err)
+    graphics_toolkit("gnuplot"); # fix per i grafici
 
     % Plot confronto reale vs stimato
     figure(1);
@@ -35,5 +36,4 @@ function plot_state(x_real, x_hat, t, err)
     ylabel('Valore');
     legend('e(x)', 'e(x\_dot)', 'e(theta)', 'e(theta\_dot)');
     grid on;
-    disp('Simulazione completata. I grafici mostrano i risultati.');
 end
