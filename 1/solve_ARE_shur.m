@@ -28,6 +28,6 @@ function P = solve_ARE_shur(A, B, Q, R)
     % La soluzione P è data da P = U21 * inv(U11)
     P = U21 / U11; 
 
-    % La soluzione P deve essere simmetrica. Piccoli errori numerici
+    % La soluzione P deve essere simmetrica, facendo così evito piccoli errori numerici.
     P = (P + P') / 2;
 end
