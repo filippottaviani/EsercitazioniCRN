@@ -4,7 +4,7 @@ function [dqdt, ref, err, ctrl] = unicycle_dynamics(t, q)
 
     x = q(1); y = q(2); theta = q(3);
 
-    % Figura a Otto (Lemniscata):
+    % Traiettoria a 8
     A = 3; 
     w0 = 0.3; % frequenza base
     xd = A * sin(w0*t);
