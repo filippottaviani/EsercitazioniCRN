@@ -1,4 +1,4 @@
-% Verifica se la copppia è controllabile
+% Verifica se la coppia è controllabile
 function controllable = is_controllable(A, B)
     % Costruisco manualmente la matrice di controllabilità: R_AB = [B, AB, A^2B, ..., A^(n-1)B]
     R_AB = B;  % Inizializzo con B

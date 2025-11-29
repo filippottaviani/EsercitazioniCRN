@@ -39,7 +39,7 @@ v_cmd = zeros(N,1);
 w_cmd = zeros(N,1);
 
 for i=1:N
-    [~, ref, err, ctrl] = unicycle_dynamics(t(i), q(i,:)');
+    [dqdt, ref, err, ctrl] = unicycle_dynamics(t(i), q(i,:)');
     xd(i) = ref(1);
     yd(i) = ref(2);
     thetad(i) = ref(3);

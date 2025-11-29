@@ -12,6 +12,7 @@ M = 1.0;     % Massa del carrello (kg)
 m = 0.1;     % Massa del pendolo (kg)
 l = 0.5;     % Lunghezza del pendolo (metri - dal perno al centro di massa)
 g = 9.81;    % Accelerazione di gravità (m/s^2)
+tol = -1e-6 % per evitare errori di arrotondamento
 
 % Matrice A
 A = [0, 1, 0, 0;
@@ -72,6 +73,7 @@ poles_controller = eig(A - B*K);
 disp('Poli controllore (A-BK):');
 disp(poles_controller);
 
+%% CASO NON RUMOROSO
 % Prendo la parte reale del polo dominante (più lento) del controllore
 dominant_pole = max(real(poles_controller));
 
@@ -84,24 +86,42 @@ P_obs = [
     ];
 
 % Uso 'place' per trovare L.
-L_transpose = place(A', C', P_obs);
-L = L_transpose'; % Matrice di guadagno dell'osservatore
-
+L_luen_t = place(A', C', P_obs);
+L_luen = L_luen_t'; % Matrice di guadagno dell'osservatore
 disp('Guadagno Osservatore (L):');
-disp(L);
+disp(L_luen);
 
-% Poli dell'osservatore
-poles_observer = eig(A - L*C);
-disp('Poli osservatore (A-LC):');
-disp(poles_observer);
-
-# Verifico la stabilità del sistema
-tol = -1e-6 # per evitare errori di arrotondamento
-if max(real(poles_controller)) < tol && max(real(poles_observer)) < tol
+% Verifico la stabilità del sistema
+if is_stabilizable(A, B, K, tol) < tol && is_detectable(C, A, L_luen, tol)
     disp('Il sistema a ciclo chiuso è stabile.')
 else
     error('Il sistema a ciclo chiuso non è stabile!')
 end
 
-%% Simulo il sistema completo (Regolatore + Osservatore)
-simulate_system(A, B, C, K, L)
+% Simulo il sistema completo (Regolatore + Osservatore)
+simulate_system(A, B, C, K, L_luen)
+
+
+% CASO RUMOROSO
+% Definiamo le caratteristiche del rumore
+B_w = B; 
+
+% Covarianza del Rumore di Processo (W) e di Misura (V)
+W = 0.1;  % Intensità del disturbo sul processo
+V = diag([0.001, 0.001]); % Rumore dei sensori
+
+% Verifico la stabilità del sistema
+if is_stabilizable(A, B_w, K, tol) < tol && is_detectable(C, A, L_kalm, tol)
+    disp('Il sistema a ciclo chiuso è stabile.')
+else
+    error('Il sistema a ciclo chiuso non è stabile!')
+end
+
+% Calcolo del guadagno L ottimo (dualità con Kalman)
+[L_kalm_t, ~, ~] = lqr(A', C', B_w*W*B_w', V);
+L_kalm = L_kalm_t'; 
+disp('Guadagno Filtro di Kalman (L):');
+disp(L_kalm);
+
+%% Simulo il sistema completo con rumore
+simulate_noisy_system(A, B, C, K, L_kalm, B_w, W, V)
