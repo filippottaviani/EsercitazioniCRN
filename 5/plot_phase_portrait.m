@@ -1,5 +1,6 @@
 % Funzione per il plotting
 function plot_phase_portrait(fig_num, f_handle, condizioni_iniziali)
+    graphics_toolkit("gnuplot"); # fix per i grafici
     figure(fig_num); % Attiva la figura corretta
     
     % Creiamo la griglia per il campo vettoriale
@@ -19,7 +20,7 @@ function plot_phase_portrait(fig_num, f_handle, condizioni_iniziali)
     quiver(X1_grid, X2_grid, u./norme, v./norme, 'AutoScaleFactor', 0.5, 'Color', [0.8 0.8 0.8]);
 
     % Simuliamo e plottiamo le traiettorie
-    t_span = [0 20];
+    t_span = [0 1];
     for i = 1:size(condizioni_iniziali, 1)
         [t, x_sim] = ode45(f_handle, t_span, condizioni_iniziali(i,:));
         plot(x_sim(:, 1), x_sim(:, 2), 'b-', 'LineWidth', 1.5);

@@ -123,5 +123,5 @@ L_kalm = L_kalm_t';
 disp('Guadagno Filtro di Kalman (L):');
 disp(L_kalm);
 
-%% Simulo il sistema completo con rumore
+% Simulo il sistema completo con rumore
 simulate_noisy_system(A, B, C, K, L_kalm, B_w, W, V)
