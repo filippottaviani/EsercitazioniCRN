@@ -1,4 +1,4 @@
-function y = simulate_system(A, B, C, K, L)
+function simulate_system(A, B, C, K, L)
     % Ora simuliamo il sistema combinato (8 stati).
     A_cc = [ A, -B*K;
             L*C, A - B*K - L*C];

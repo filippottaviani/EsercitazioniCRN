@@ -34,12 +34,8 @@ if ~is_observable(E, A)
     error('ARE non risolvibile: la coppia (A, B) non è osservabile!');
 end
 
-% Soluzioni della ARE
-P_through_DRE = solve_ARE_through_DRE(A, B, Q, R);
-P_shur = solve_ARE_shur(A, B, Q, R)
+% Soluzione della ARE
+P_inf = solve_ARE_through_DRE(A, B, Q, R);
 
-fprintf('\nSOLUZIONI EQUAZIONE ALGEBRICA DI RICCATI (ARE)\n')
-fprintf('\n1. Attraverso la soluzione stazionaria della DRE')
-disp(P_through_DRE)
-fprintf('\n2. Attraverso il calcolo del complemento di Shur')
-disp (P_shur)
+fprintf('\nSoluzione dell equazione algebrica di Riccati (ARE)\n')
+disp(P_inf)

@@ -63,10 +63,15 @@ Q = diag([
 
 R = 0.1; % Penalità bassa sul comando per avere una risposta rapida
 
-% Calcolo del guadagno K
-K = lqr(A, B, Q, R);
-disp('Guadagno LQR (K):');
-disp(K);
+% Calcolo del guadagno K con la mia DRE e con la funzione apposita
+P_inf = solve_ARE_through_DRE(A, B, Q, R);
+K_cal = inv(R) * B' * P_inf;
+K_fun = lqr(A, B, Q, R);
+disp('Guadagno LQR (K) calcolato tramite es 1:');
+disp(K_cal);
+disp('Guadagno LQR (K) calcolato tramite funzione apposita:');
+disp(K_fun);
+K = K_cal
 
 % Poli del sistema controllato (ad anello chiuso con stato completo)
 poles_controller = eig(A - B*K);
