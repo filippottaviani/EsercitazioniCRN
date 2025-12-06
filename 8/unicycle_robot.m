@@ -13,7 +13,7 @@ global gains
 gains = [k1, k2, k3];
 
 % Configurazione della simulazione
-T_sim = 20;         % Durata [s]
+T_sim = 15;         % Durata [s]
 dt = 0.01;          % Passo
 t_span = 0:dt:T_sim;
 
@@ -21,7 +21,7 @@ t_span = 0:dt:T_sim;
 q0 = [0; -1; 0]; 
 
 % Simulazione 
-disp('Avvio simulazione Uniciclo...');
+disp('Avvio simulazione del robot uniciclo');
 [t, q] = ode45(@(t,q) unicycle_dynamics(t, q), t_span, q0);
 
 % Ricostruiamo i segnali di riferimento e di errore per i grafici
@@ -51,4 +51,4 @@ for i=1:N
 end
 
 % Plot delle traiettorie degli errori e dei riferimenti
-plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd)
+plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)

@@ -1,4 +1,6 @@
-function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd)
+function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)
+    graphics_toolkit("gnuplot"); # fix per i grafici
+
     % Traiettoria nel piano XY
     figure(1);
     plot(x, y, 'b', 'LineWidth', 2);
@@ -32,7 +34,7 @@ function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd)
     ylabel('e_3 (Ang)');
     xlabel('Tempo [s]');
 
-    % Ingressi di Controllo
+    % Ingressi di controllo
     figure(3);
     subplot(2,1,1);
     plot(t, v_cmd, 'm', 'LineWidth', 1.5);
