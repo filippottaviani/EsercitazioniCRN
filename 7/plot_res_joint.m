@@ -1,5 +1,6 @@
 function plot_res_joint(t_j, y_j, q_des, T_sim)
-    figure('Name', 'Scenario A: Spazio Giunti');
+    graphics_toolkit("gnuplot"); # fix per i grafici
+    figure('Name', 'Controllo nello spazio dei giunti');
     plot(t_j, y_j(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t_j, y_j(:,2), 'r', 'LineWidth', 2);
@@ -8,5 +9,5 @@ function plot_res_joint(t_j, y_j, q_des, T_sim)
     grid on;
     ylabel('Angoli [rad]');
     legend('q1', 'q2', 'q1_{target}', 'q2_{target}');
-    title('Regolazione ai Giunti (PD + G)');
+    title('Regolazione ai giunti (PD + G)');
 end

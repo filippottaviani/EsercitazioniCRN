@@ -6,10 +6,10 @@ function dy = robot_dynamics_operational(t, y, x_des)
     % Calcolo matrici dinamiche (B, C, g, F)
     [B, C, g, F] = get_dynamic_matrices(q, dq);
     
-    % Calcolo Cinematica e JACOBIANO
+    % Calcolo cinematica e jacobiano
     [x_curr, J] = get_kinematics(q);
     
-    % Legge di Controllo nello Spazio Operativo
+    % Legge di controllo nello spazio operativo
     e_x = x_des - x_curr;
     
     % Velocità cartesiana reale
@@ -23,9 +23,9 @@ function dy = robot_dynamics_operational(t, y, x_des)
     F_task = Kp * e_x - Kd * dx;
     
     % Mappatura in coppie ai giunti tramite J trasposto + Compensazione Gravità
-    tau = J' * F_task + g;
+    u = J' * F_task + g;
     
     % 4. Dinamica diretta del robot
-    ddq = B \ (tau - C*dq - F - g);
+    ddq = B \ (u - C*dq - F - g);
     dy = [dq; ddq];
 end

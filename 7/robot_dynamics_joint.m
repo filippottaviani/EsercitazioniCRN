@@ -14,9 +14,9 @@ function dy = robot_dynamics_joint(t, y, q_des)
     e_q = q_des - q;        % Errore di posizione ai giunti
     
     % Controllo PD + Compensazione Gravità (g)
-    tau = Kp * e_q - Kd * dq + g;
+    u = Kp * e_q - Kd * dq + g;
     
     % Dinamica
-    ddq = B \ (tau - C*dq - F - g);
+    ddq = B \ (u - C*dq - F - g);
     dy = [dq; ddq];
 end

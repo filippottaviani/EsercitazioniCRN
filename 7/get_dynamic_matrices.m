@@ -1,7 +1,11 @@
 function [B, C, g, F] = get_dynamic_matrices(q, dq)
     global theta
-    t1=theta(1); t2=theta(2); t3=theta(3); 
-    t4=theta(4); t5=theta(5); t6=theta(6);
+    t1=theta(1);
+    t2=theta(2);
+    t3=theta(3); 
+    t4=theta(4);
+    t5=theta(5);
+    t6=theta(6);
     
     c1 = cos(q(1));
     c2 = cos(q(2));

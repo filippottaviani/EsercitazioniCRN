@@ -1,4 +1,5 @@
 function plot_res_op(y, target_pos, t);
+    graphics_toolkit("gnuplot"); # fix per i grafici
     % Estrazione coordinate target
     x_des = target_pos(1);
     y_des = target_pos(2);
@@ -14,7 +15,7 @@ function plot_res_op(y, target_pos, t);
         x_traj(i,:) = pos';
     end
 
-    figure('Name', 'Controllo Spazio Operativo');
+    figure('Name', 'Controllo nello spazio operativo');
     plot(t, x_traj(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t, x_traj(:,2), 'r', 'LineWidth', 2);
