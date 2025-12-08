@@ -86,6 +86,7 @@ disp('Inseguimento adattativo (parametri ignoti)...');
 
 % Parametri di attrito "reali"
 F_real = [2; 2];
+T_adapt = [0 20]
 
 % Parametri Adattativi
 Lambda = diag([5, 5]);      % Guadagno sulla posizione
@@ -97,7 +98,7 @@ Gamma(6,6) = 10;
 % Condizioni iniziali: stato + stima parametri
 theta_hat0 = zeros(8, 1); 
 y0_adapt = [x0; theta_hat0]; % [q; dq; theta_hat]
-[t_ad, y_ad] = ode45(@(t,y) robot_dynamics_adaptive(t, y, A_traj, w_traj, Lambda, Gamma, Kd_adapt), [0 15], y0_adapt);
+[t_ad, y_ad] = ode45(@(t,y) robot_dynamics_adaptive(t, y, A_traj, w_traj, Lambda, Gamma, Kd_adapt), T_adapt, y0_adapt);
 
 % Estrazione dati
 q_ad = y_ad(:, 1:2);
