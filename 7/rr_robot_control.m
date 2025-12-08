@@ -82,7 +82,7 @@ plot_res_traj(t, q, dq, q_des, dq_des)
 %% CONTROLLO IN TRAIETTORIA NELLO SPAZIO OPERATIVO
 
 %% CONTROLLO ADATTIVO
-disp('Inseguimento Adattativo (Parametri Ignoti)...');
+disp('Inseguimento adattativo (parametri ignoti)...');
 
 % Parametri di attrito "reali"
 F_real = [2; 2];
@@ -90,9 +90,9 @@ F_real = [2; 2];
 % Parametri Adattativi
 Lambda = diag([5, 5]);      % Guadagno sulla posizione
 Kd_adapt = diag([20, 20]);  % Guadagno sulla "sliding variable"
-Gamma = eye(8) * 2;         % Velocità di apprendimento parametri (8 parametri: 6 theta + 2 attriti)
+Gamma = eye(8) * 2;         % Velocità di apprendimento parametri
 Gamma(5,5) = 10;
-Gamma(6,6) = 10; % Aumentiamo learning rate per termini gravità dominanti
+Gamma(6,6) = 10;
 
 % Condizioni iniziali: stato + stima parametri
 theta_hat0 = zeros(8, 1); 
