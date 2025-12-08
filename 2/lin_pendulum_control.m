@@ -4,15 +4,14 @@ close all;
 
 pkg load control
 
-addpath('funzioni')
-addpath('2')
+addpath('funzioni','1','2')
 
 % Definiamo i parametri fisici del carrello e del pendolo
 M = 1.0;     % Massa del carrello (kg)
 m = 0.1;     % Massa del pendolo (kg)
 l = 0.5;     % Lunghezza del pendolo (metri - dal perno al centro di massa)
 g = 9.81;    % Accelerazione di gravità (m/s^2)
-tol = -1e-6 % per evitare errori di arrotondamento
+tol = -1e-6  % per evitare errori di arrotondamento
 
 % Matrice A
 A = [0, 1, 0, 0;
@@ -33,6 +32,9 @@ C = [1, 0, 0, 0;   % Misura di x
 % Matrice D (nessun legame diretto ingresso-uscita)
 D = [0;
      0];
+
+% Scelgo un orizzonte temporale T sufficientemente lungo
+T_horizon = 100;
 
 % Creazione del sistema state-space
 sys = ss(A, B, C, D);
@@ -61,10 +63,10 @@ Q = diag([
     1,   % Penalità su theta_dot
     ]);
 
-R = 0.1; % Penalità bassa sul comando per avere una risposta rapida
+R = 0.1; % Penalità bassa sul comando
 
 % Calcolo del guadagno K con la mia DRE e con la funzione apposita
-P_inf = solve_ARE_through_DRE(A, B, Q, R);
+P_inf = solve_ARE_through_DRE(A, B, Q, R, T_horizon);
 K_cal = inv(R) * B' * P_inf;
 K_fun = lqr(A, B, Q, R);
 disp('Guadagno LQR (K) calcolato tramite es 1:');
@@ -105,7 +107,6 @@ end
 
 % Simulo il sistema completo (Regolatore + Osservatore)
 simulate_system(A, B, C, K, L_luen)
-
 
 % CASO RUMOROSO
 % Definiamo le caratteristiche del rumore

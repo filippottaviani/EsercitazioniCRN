@@ -21,7 +21,7 @@ t_plot_analitico1 = linspace(0, 0.99, 100);
 % Plotting
 titolo1 = 'Sistema 1: dx/dt = x^2 (Finite Time Escape)';
 plot_sol(1, titolo1, t_num1, x_num1, t_an1, x_an1);
-ylim([0, 50]); % Limitiamo l'asse y per vedere il comportamento
+ylim([0, 50]); % Limito l'asse y per vedere il comportamento
 
 %% SISTEMA 2: dx/dt = -x^3
 % Definisco il problema

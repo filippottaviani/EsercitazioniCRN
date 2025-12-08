@@ -8,11 +8,12 @@ pkg load control
 % Definisco il sistema
 A = [-1 2; -3 -4];
 B = [1; 0];
-
-% 
 E = eye(2);
 Q = E'*E;
 R = 1;
+
+% Scelgo un orizzonte temporale T sufficientemente lungo
+T_horizon = 100;
 
 % Q deve essere semidefinita positiva
 if ~is_pos_semidefinite(Q)
@@ -35,7 +36,7 @@ if ~is_observable(E, A)
 end
 
 % Soluzione della ARE
-P_inf = solve_ARE_through_DRE(A, B, Q, R);
+P_inf = solve_ARE_through_DRE(A, B, Q, R, T_horizon);
 
 fprintf('\nSoluzione dell equazione algebrica di Riccati (ARE)\n')
 disp(P_inf)

@@ -21,12 +21,14 @@ function simulate_system(A, B, C, K, L)
     x_real_0 = [
         0.5;   % Carrello a 0.5m
         0;     % Carrello fermo
-        0.2;   % Pendolo inclinato di 0.2 rad (circa 11.5 gradi)
+        0.2;   % Pendolo inclinato di 0.2 rad
         0];    % Pendolo fermo
 
-    x_hat_0 = [0; 0; 0; 0]; % L'osservatore "pensa" che tutto sia a zero
+    % Stima iniziale dell'osservatore
+    x_hat_0 = [0; 0; 0; 0]; 
 
-    x0 = [x_real_0; x_hat_0]; % Vettore di stato iniziale (8x1)
+    % Vettore di stato iniziale
+    x0 = [x_real_0; x_hat_0]; 
 
     % Simulazione
     t_sim = 0:0.01:10; % 10 secondi
@@ -35,7 +37,7 @@ function simulate_system(A, B, C, K, L)
     % Estrazione dei risultati
     x_real = y_sim(:, 1:4);
     x_hat = y_sim(:, 5:8);
-    err = x_real - x_hat; % Errore di stima
+    err = x_real - x_hat; 
 
     % Plot dei Risultati
     plot_state(x_real, x_hat, t, err)

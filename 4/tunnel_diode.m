@@ -36,19 +36,21 @@ P2_num = double(P2);
 P3_num = double(P3);
 
 disp('\nTrovati 3 punti di equilibrio:');
-disp('P1:'); disp(P1_num');
-disp('P2:'); disp(P2_num');
-disp('P3:'); disp(P3_num');
+disp('P1:');
+disp(P1_num');
+disp('P2:');
+disp(P2_num');
+disp('P3:');
+disp(P3_num');
 
 % Calcoliamo la matrice Jacobiana J = df/dx
 disp('')
-disp('Calcolo Matrice Jacobiana J(x)...');
+disp('Calcolo matrice jacobiana');
 
 J = jacobian(f, [x1, x2]);
 
 disp('J(x1, x2) =');
 disp(J);
-
 
 %% Analizzo e classifico i punti di equilibrio
 disp('')
@@ -58,7 +60,7 @@ analyze_equilibrium_point(J, x1, x2, P1_num)
 analyze_equilibrium_point(J, x1, x2, P2_num)
 analyze_equilibrium_point(J, x1, x2, P3_num)
 
-% Creiamo una funzione "handle" per ode45
+% Creo una funzione "handle" per ode45
 fun_diodo = @(t, x) [
     -R/L * x(1) + 1/L * x(2);
     -1/C * x(1) + alpha/C * x(2) - beta/C * x(2)^3

@@ -1,13 +1,13 @@
 function simulate_system(A, B, C, K, L, B_w, W, V)
-    % Matrice A ciclo chiuso (8x8)
+    % Matrice A ciclo chiuso
     A_cc = [ A,       -B*K;
              L*C,     A - B*K - L*C ];
 
-    % Matrice B ciclo chiuso (8x3) -> Ingressi sono i rumori [w; v1; v2]
+    % Matrice B ciclo chiuso
     B_cc = [ B_w,       zeros(4, 2);
              zeros(4,1), L ];
 
-    % Uscite da visualizzare: x_reale (1-4) e x_stimato (5-8)
+    % Uscite da visualizzare
     C_cc = eye(8);
     D_cc = zeros(8, 3);
 

@@ -3,15 +3,15 @@ function dy = robot_dynamics_computed_torque(t, y, A_traj, w_traj)
     q = y(1:2); 
     dq = y(3:4);
     
-    % Generazione traiettoria istantanea (Riferimento)
+    % Generazione traiettoria di riferimento
     qd = A_traj .* sin(w_traj*t);
     dqd = A_traj .* w_traj .* cos(w_traj*t);
     ddqd = -A_traj .* w_traj.^2 .* sin(w_traj*t);
     
-    % Calcolo Matrici Dinamiche
+    % Calcolo matrici dinamiche
     [B, C, g, F] = get_dynamic_matrices(q, dq);
     
-    % Legge di Controllo Computed Torque
+    % Legge di controllo Computed Torque
     e = qd - q;
     de = dqd - dq;
     
@@ -26,7 +26,7 @@ function dy = robot_dynamics_computed_torque(t, y, A_traj, w_traj)
     % Linearizzazione tramite feedback (Calcolo Coppia)
     u = B * u_aux + C*dq + F + g;
     
-    % 4. Dinamica Diretta (Simulazione del robot reale)
+    % Dinamica diretta
     ddq = B \ (u - C*dq - F - g);
     dy = [dq; ddq];
 end

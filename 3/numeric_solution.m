@@ -1,4 +1,3 @@
-% Funzione per calcolare la soluzione numerica di un ODE
 function [t_num, x_num] = numeric_solution(fun_handle, t_span, x0)
 
     % Opzioni standard per il risolutore
