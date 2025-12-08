@@ -8,10 +8,10 @@ pkg load python3-simpy
 addpath('5')
 
 
-% Parametri comuni (M, k1, beta1 > 0)
+% Parametri comuni
 M = 1.0;
 k1 = 1.0;
-beta1 = 0.5; % Smorzamento leggero (sottosmorzato)
+beta1 = 0.5; % Smorzamento leggero
 
 % Parametro non lineare
 k2 = 1.0;     % Termine della molla non lineare
@@ -37,7 +37,7 @@ f_soft = @(t, x) [
 ];
 J_soft = @(x) [0, 1; (-k1 - 3*k2*x(1)^2)/M, -beta1/M];
 
-% Condizioni iniziali di esempio (comuni per tutti i plot)
+% Condizioni iniziali
 cond_iniziali = [
     1, 0;
     -1, 0;

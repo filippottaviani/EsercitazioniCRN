@@ -1,12 +1,12 @@
 function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
-    % Plot Scenario 1: Stabilizzazione
+    % Stabilizzazione
     figure(1);
     subplot(3,1,1);
     plot(t1, y1(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t1, xd1, 'k-', 'LineWidth', 1.5);
     grid on;
-    title('Scenario 1: Stabilizzazione - Stato x(t)');
+    title(' Stabilizzazione - Stato x(t)');
     legend('x(t)', 'x_d(t)=0');
     ylabel('Stato');
 
@@ -26,14 +26,14 @@ function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
     xlabel('Tempo [s]');
     ylabel('u');
 
-    % Plot Scenario 2: Inseguimento
+    % Inseguimento
     figure(2);
     subplot(3,1,1);
     plot(t2, y2(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t2, xd2, 'k-', 'LineWidth', 1.5);
     grid on; 
-    title('Scenario 2: Inseguimento - Stato x(t)');
+    title('Inseguimento - Stato x(t)');
     legend('x(t)', 'x_d(t)=sin(t)');
     ylabel('Stato');
 

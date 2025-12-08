@@ -43,11 +43,10 @@ function plot_vector_field(R, L, C, alpha, beta, P1_num, P2_num, P3_num, t, fun_
     end
 
     % Impostazioni finali del grafico
-    disp('')
     title('Ritratto di Fase - Diodo Tunnel');
     xlabel('x1 (Corrente I_L)');
     ylabel('x2 (Tensione V_C)');
     axis([-3 3 -3 3]);
     grid on;
     hold off;
-endfunction
+end

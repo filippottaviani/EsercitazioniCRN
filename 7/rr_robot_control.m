@@ -63,9 +63,8 @@ x0 = [q0; dq0];
 T_sim = 5;
 disp('Avvio simulazione Computed Torque...');
 [t, y] = ode45(@(t,y) robot_dynamics_computed_torque(t, y, A_traj, w_traj), [0 T_sim], x0);
-disp('Simulazione completata.');
 
-% Risultati (posizione e velocità)
+% Risultati
 q = y(:, 1:2);
 dq = y(:, 3:4);
 
@@ -81,3 +80,36 @@ end
 plot_res_traj(t, q, dq, q_des, dq_des)
 
 %% CONTROLLO IN TRAIETTORIA NELLO SPAZIO OPERATIVO
+
+%% CONTROLLO ADATTIVO
+disp('Inseguimento Adattativo (Parametri Ignoti)...');
+
+% Parametri di attrito "reali"
+F_real = [2; 2];
+
+% Parametri Adattativi
+Lambda = diag([5, 5]);      % Guadagno sulla posizione
+Kd_adapt = diag([20, 20]);  % Guadagno sulla "sliding variable"
+Gamma = eye(8) * 2;         % Velocità di apprendimento parametri (8 parametri: 6 theta + 2 attriti)
+Gamma(5,5) = 10;
+Gamma(6,6) = 10; % Aumentiamo learning rate per termini gravità dominanti
+
+% Condizioni iniziali: stato + stima parametri
+theta_hat0 = zeros(8, 1); 
+y0_adapt = [x0; theta_hat0]; % [q; dq; theta_hat]
+[t_ad, y_ad] = ode45(@(t,y) robot_dynamics_adaptive(t, y, A_traj, w_traj, Lambda, Gamma, Kd_adapt), [0 15], y0_adapt);
+
+% Estrazione dati
+q_ad = y_ad(:, 1:2);
+dq_ad = y_ad(:, 3:4);
+theta_hist = y_ad(:, 5:end);
+
+% Ricostruzione riferimento
+q_des_ad = zeros(length(t_ad), 2);
+for i=1:length(t_ad)
+    q_des_ad(i,:) = (A_traj .* sin(w_traj*t_ad(i)))';
+end
+
+% Vettore parametri veri completo
+theta_real_full = [theta; F_real];
+plot_res_adaptive(t_ad, q_ad, dq_ad, theta_hist, q_des_ad, theta_real_full);

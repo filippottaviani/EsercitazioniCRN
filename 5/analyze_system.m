@@ -1,4 +1,3 @@
-% Funzione per l'analisi
 function analyze_system(fig_num, title_str, J_func, P_equilibri)
     figure(fig_num);
     clf; % Pulisce la figura

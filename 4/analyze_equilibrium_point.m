@@ -20,4 +20,4 @@ function analyze_equilibrium_point(J, x1, x2, P_num)
         disp('  -> Caso critico)');
     end
     disp(' ');
-endfunction
+end

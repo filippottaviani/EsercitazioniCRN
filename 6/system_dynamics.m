@@ -21,11 +21,10 @@ function [dydt, u, x_d] = system_dynamics(t, y, type)
     % Legge di Controllo (Certainty Equivalence)
     u = -a_hat * x + dx_d - lambda * e;
 
-    % Dinamica del Sistema (Realtà fisica)
+    % Dinamica del sistema
     dxdt = a_true * x + u;
 
-    % Legge di Adattamento (Aggiornamento stima parametro)
+    % Legge di adattamento
     da_hat_dt = gamma * x * e;
-
     dydt = [dxdt; da_hat_dt];
 end
