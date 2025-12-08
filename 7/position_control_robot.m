@@ -46,3 +46,37 @@ q0_op = [-pi/2; 0; 0; 0];
 
 % Visualizzazione dei risultati
 plot_res_op(y_op, target_pos, t_op);
+
+%% CONTROLLO in traiettoria
+% Definizione delle traiettorie desiderata
+A_traj = [pi/4; pi/6];      % Ampiezze [rad]
+w_traj = [1.0; 1.5];        % Frequenze [rad/s]
+
+% Condizione iniziale
+q0 = [2; 2];
+dq0 = [1; 1];
+x0 = [q0; dq0];
+
+% Simulazione
+T_sim = 3;
+disp('Avvio simulazione Computed Torque...');
+[t, y] = ode45(@(t,y) robot_dynamics_computed_torque(t, y, A_traj, w_traj), [0 T_sim], x0);
+disp('Simulazione completata.');
+
+% Risultati (posizione e velocità)
+q = y(:, 1:2);
+dq = y(:, 3:4);
+
+% Ricostruzione riferimenti per il plot
+q_des = zeros(length(t), 2);
+dq_des = zeros(length(t), 2);
+for i=1:length(t)
+    q_des(i,:) = (A_traj .* sin(w_traj*t(i)))';
+    dq_des(i,:) = (A_traj .* w_traj .* cos(w_traj*t(i)))';
+end
+
+% Calcolo dell'errore
+e_q = q_des - q;
+
+% Plot
+plot_res_traj(t, q, dq, q_des, e_q)
