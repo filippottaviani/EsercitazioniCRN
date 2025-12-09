@@ -80,6 +80,44 @@ end
 plot_res_traj(t, q, dq, q_des, dq_des)
 
 %% CONTROLLO IN TRAIETTORIA NELLO SPAZIO OPERATIVO
+disp('Inseguimento traiettoria nello spazio operativo');
+
+% Definizione Cerchio
+traj_data.Center = [0.5; 0.5];
+traj_data.Radius = 0.2;
+traj_data.Omega  = 1.5;
+
+% Partenza
+q0_op_tr = [0; pi/2]; 
+dq0_op_tr = [0; 0];
+x0_op_tr = [q0_op_tr; dq0_op_tr];
+
+% Simulazione
+T_sim_op = 10;
+[t_opt, y_opt] = ode45(@(t,y) robot_dynamics_op_track(t, y, traj_data), [0 T_sim_op], x0_op_tr);
+
+% Analisi risultati e plot
+x_real = zeros(length(t_opt), 2);
+x_des_tr = zeros(length(t_opt), 2);
+e_x = zeros(length(t_opt), 2);
+
+for i=1:length(t_opt)
+    % Posizione reale (Cinematica Diretta)
+    [pos_real, ~] = get_kinematics(y_opt(i,1:2)');
+    x_real(i,:) = pos_real';
+    
+    % Ricalcolo riferimento al tempo t_opt(i)
+    C = traj_data.Center;
+    R = traj_data.Radius;
+    w = traj_data.Omega;
+    t_val = t_opt(i);
+    xd = C + [R*cos(w*t_val); R*sin(w*t_val)];
+    x_des_tr(i,:) = xd';
+    e_x(i,:) = (xd - pos_real)';
+end
+
+%  Plot dei risultati
+plot_res_op_traj(t_opt, x_real, x_des_tr, e_x)
 
 %% CONTROLLO ADATTIVO
 disp('Inseguimento adattativo (parametri ignoti)...');

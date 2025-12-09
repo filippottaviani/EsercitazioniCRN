@@ -7,16 +7,16 @@ addpath('6')
 % Parametri del sistema
 global a_true lambda gamma
 
-a_true = 1.5;      % Valore REALE del parametro 'a' (instabile se > 0)
-                   % Il controllore NON conosce questo valore.
+% Valore reale del parametro
+a_true = 1.5;
 
 % Parametri di progetto del controllore
 lambda = 2.0;      % Velocità di convergenza dell'errore (lambda > 0)
-gamma  = 5.0;      % Guadagno di adattamento (velocità stima di 'a')
+gamma  = 5.0;      % Guadagno di adattamento
 
 % Parametri di simulazione
-T_sim = 20;        % Durata simulazione [s]
-dt = 0.01;         % Passo di campionamento
+T_sim = 20;
+dt = 0.01;
 t_span = 0:dt:T_sim;
 
 % Condizioni iniziali
@@ -26,12 +26,12 @@ initial_state = [x0; a_hat0];
 
 % Stabilizzazione
 disp('Avvio simulazione Scenario 1: Stabilizzazione...');
-type_ref = 1; % 1 = Stabilizzazione
+type_ref = 1; % Stabilizzazione
 [t1, y1] = ode45(@(t,y) system_dynamics(t, y, type_ref), t_span, initial_state);
 
 % Inseguimento di traiettoria
 disp('Avvio simulazione Scenario 2: Inseguimento...');
-type_ref = 2; % 2 = Inseguimento Sinusoide
+type_ref = 2; % Inseguimento sinusoide
 [t2, y2] = ode45(@(t,y) system_dynamics(t, y, type_ref), t_span, initial_state);
 
 % Ricostruzione segnali di controllo e riferimenti per i grafici

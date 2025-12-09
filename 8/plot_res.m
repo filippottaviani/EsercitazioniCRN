@@ -12,7 +12,7 @@ function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)
     draw_robot(x(end), y(end), theta(end), 'k');
     grid on;
     axis equal;
-    title('Traiettoria nel Piano XY');
+    title('Traiettoria nel piano XY');
     legend('Robot', 'Riferimento', 'Start', 'End');
     xlabel('X [m]');
     ylabel('Y [m]');
@@ -23,7 +23,7 @@ function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)
     plot(t, e1, 'LineWidth', 2);
     grid on;
     ylabel('e_1 (Long)');
-    title('Errori di Inseguimento (Body Frame)');
+    title('Errori di inseguimento');
     subplot(3,1,2);
     plot(t, e2, 'LineWidth', 2);
     grid on;

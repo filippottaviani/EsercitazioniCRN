@@ -23,27 +23,25 @@ function [dqdt, ref, err, ctrl] = unicycle_dynamics(t, q)
     thetad = atan2(dyd, dxd);
     wd = (dxd*ddyd - dyd*ddxd) / (vd^2 + 1e-6);
 
-    % 2. Calcolo Errori nel Body Frame (Matrice di rotazione)
+    % Calcolo errori nel body frame
     ex_world = xd - x;
     ey_world = yd - y;
     e_theta = thetad - theta;
     
     % Normalizzazione angolo tra -pi e pi
     e_theta = atan2(sin(e_theta), cos(e_theta));
-
     e1 =  cos(theta)*ex_world + sin(theta)*ey_world;
     e2 = -sin(theta)*ex_world + cos(theta)*ey_world;
     e3 = e_theta;
 
-    % 3. Legge di Controllo (Lyapunov-based)
+    % Legge di controllo
     v = vd * cos(e3) + k1 * e1;
     w = wd + k2 * vd * e2 + k3 * sin(e3);
 
-    % 4. Dinamica del Robot reale
+    % 4. Dinamica del robot reale
     dxdt = v * cos(theta);
     dydt = v * sin(theta);
     dthetadt = w;
-
     dqdt = [dxdt; dydt; dthetadt];
     
     % Output extra per post-processing

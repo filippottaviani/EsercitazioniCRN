@@ -11,7 +11,7 @@ function plot_vector_field(R, L, C, alpha, beta, P1_num, P2_num, P3_num, t, fun_
     figure(1);
     hold on;
 
-    % Plot del campo vettoriale (le frecce)
+    % Plot del campo vettoriale
     quiver(X1_grid, X2_grid, u_norm, v_norm, 'Color', [0.8 0.8 0.8]);
 
     % Plot dei punti di equilibrio
@@ -38,7 +38,7 @@ function plot_vector_field(R, L, C, alpha, beta, P1_num, P2_num, P3_num, t, fun_
         [t, x_sim] = ode45(fun_diodo, t_span, condizioni_iniziali(i,:));
         plot(x_sim(:, 1), x_sim(:, 2), 'b-', 'LineWidth', 1.5);
 
-        % Plotta il punto di partenza
+        % Plot del punto di partenza
         plot(x_sim(1,1), x_sim(1,2), 'bo', 'MarkerFaceColor', 'b');
     end
 
