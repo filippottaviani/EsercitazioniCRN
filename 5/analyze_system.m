@@ -4,7 +4,7 @@ function analyze_system(fig_num, title_str, J_func, P_equilibri)
     title(title_str);
     hold on;
     disp(' ');
-    disp(['--- Analisi: ', title_str, ' ---']);
+    disp(['Analisi: ', title_str]);
 
     for i = 1:size(P_equilibri, 1)
         P_num = P_equilibri(i, :);
@@ -12,8 +12,10 @@ function analyze_system(fig_num, title_str, J_func, P_equilibri)
         poli_P = eig(J_P);
 
         disp(['Equilibrio P', num2str(i), ' = (', num2str(P_num(1)), ', ', num2str(P_num(2)), ')']);
-        disp('  Jacobiano J(P):'); disp(J_P);
-        disp('  Autovalori (Poli):'); disp(poli_P');
+        disp('  Jacobiano J(P):');
+        disp(J_P);
+        disp('  Autovalori (Poli):');
+        disp(poli_P');
 
         % Classificazione
         if all(real(poli_P) < 0)

@@ -4,7 +4,7 @@ function [dydt, u, x_d] = system_dynamics(t, y, type)
     x = y(1);      % Stato attuale
     a_hat = y(2);  % Stima attuale del parametro
 
-    % Definizione Traiettoria Desiderata x_d(t) e sua derivata dx_d(t)
+    % Definizione traiettoria desiderata x_d(t) e sua derivata dx_d(t)
     if type == 1
         % Stabilizzazione
         x_d = 0;

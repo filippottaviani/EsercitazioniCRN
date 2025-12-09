@@ -7,7 +7,6 @@ pkg load python3-simpy
 
 addpath('5')
 
-
 % Parametri comuni
 M = 1.0;
 k1 = 1.0;
@@ -61,7 +60,6 @@ P_hard = [
 ];
 analyze_system(2, 'Caso 3: Molla "indurente"', J_hard, P_hard);
 plot_phase_portrait(3, f_hard, cond_iniziali);
-
 
 % Analisi caso 3
 P_soft = [0, 0];
