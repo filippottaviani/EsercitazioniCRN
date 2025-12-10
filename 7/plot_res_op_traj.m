@@ -19,7 +19,8 @@ function plot_res_op_traj(t, x_real, x_des, e_x)
     plot(t, e_x(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t, e_x(:,2), 'r', 'LineWidth', 2);
-    grid on; ylabel('Errore [m]');
+    grid on; 
+    ylabel('Errore [m]');
     xlabel('Tempo [s]');
     legend('e_x', 'e_y');
     title('Errore cartesiano');

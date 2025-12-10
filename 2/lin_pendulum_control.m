@@ -1,45 +1,35 @@
-clear all;
+clear;
 clc;
 close all;
 
-pkg load control
+pkg load control;
 
-addpath('funzioni','1','2')
+addpath('1', '2', 'funzioni')
 
-% Definiamo i parametri fisici del carrello e del pendolo
-M = 1.0;     % Massa del carrello (kg)
-m = 0.1;     % Massa del pendolo (kg)
-l = 0.5;     % Lunghezza del pendolo (metri - dal perno al centro di massa)
-g = 9.81;    % Accelerazione di gravità (m/s^2)
-tol = -1e-6  % per evitare errori di arrotondamento
+% Parametri del sistema
+M = 2.0;    % Massa del carrello [kg]
+m = 0.1;    % Massa del pendolo [kg]
+l = 0.5;    % Lunghezza del pendolo [m]
+g = 9.81;   % Accelerazione di gravità [m/s^2]
 
-% Matrice A
+% Tempo per l'integrazione di P_inf
+T_horizon = 10
+
+% Definizione delle modello linearizzato
 A = [0, 1, 0, 0;
      0, 0, -m*g/M, 0;
      0, 0, 0, 1;
      0, 0, (M+m)*g/(M*l), 0];
 
-% Matrice B
 B = [0;
      1/M;
      0;
      1/(M*l)];
 
-% Matrice C (Informazione Parziale)
-C = [1, 0, 0, 0;   % Misura di x
-     0, 0, 1, 0];  % Misura di theta
+C = [1, 0, 0, 0;
+      0, 0, 1, 0];
 
-% Matrice D (nessun legame diretto ingresso-uscita)
-D = [0;
-     0];
-
-% Scelgo un orizzonte temporale T sufficientemente lungo
-T_horizon = 100;
-
-% Creazione del sistema state-space
-sys = ss(A, B, C, D);
-disp('Sistema (A, B, C, D):');
-disp(sys);
+D = zeros(size(C,1), size(B,2));
 
 % (A,B) deve essere controllabile
 if is_controllable(A, B)
@@ -55,79 +45,51 @@ else
     error('ARE non risolvibile: la coppia (A, C) non è osservabile!');
 end
 
-% Progetto del Regolatore di Stato (LQR)
-Q = diag([
-    1,   % Penalità su x
-    0.1, % Penalità su x_dot
-    100, % Penalità ALTA su theta (priorità massima!)
-    1,   % Penalità su theta_dot
-    ]);
+% Progetto del regolatore LQR
+Q_reg = diag([10, 1, 100, 1]); % Pesi sugli stati: [pos, v_pos, theta, v_theta]
+R_reg = 0.1;                   % Peso sull'ingresso di controllo
 
-R = 0.1; % Penalità bassa sul comando
-
-% Calcolo del guadagno K con la mia DRE e con la funzione apposita
-P_inf = solve_ARE_through_DRE(A, B, Q, R, T_horizon);
-K_cal = inv(R) * B' * P_inf;
-K_fun = lqr(A, B, Q, R);
-disp('Guadagno LQR (K) calcolato tramite es 1:');
-disp(K_cal);
-disp('Guadagno LQR (K) calcolato tramite funzione apposita:');
+K_fun = lqr(A, B, Q_reg, R_reg);
+P_inf_reg = solve_ARE_through_DRE(A, B, Q_reg, R_reg, T_horizon);
+K_cal = inv(R_reg) * B' * P_inf_reg;
+disp('\nGuadagno del controllore K:\n');
+disp('Guadagno K della funzione lqr');
 disp(K_fun);
+disp('Guadagno K calcolato dalla mia ARE');
+disp(K_cal);
 K = K_cal
 
-% Poli del sistema controllato (ad anello chiuso con stato completo)
-poles_controller = eig(A - B*K);
-disp('Poli controllore (A-BK):');
-disp(poles_controller);
+% Progetto dell'osservatore dello stato
+Q_obs = diag([100, 100, 100, 100]); % Rumore di processo fittizio
+R_obs = diag([1, 1]);               % Rumore di misura fittizio (su pos e angolo)
 
-%% CASO NON RUMOROSO
-% Prendo la parte reale del polo dominante (più lento) del controllore
-dominant_pole = max(real(poles_controller));
+% Calcolo il guadagno dell'osservatore per dualità
+L_fun = lqr(A', C', Q_obs, R_obs)';
+P_inf_obs = solve_ARE_through_DRE(A', C', Q_obs, R_obs, T_horizon);
+L_cal = (inv(R_obs) * C * P_inf_obs)';
+disp('Guadagno dell osservatore L:\n');
+disp('Guadagno L della funzione lqr');
+disp(L_fun);
+disp('Guadagno L calcolato dalla mia ARE');
+disp(L_cal);
+L = L_cal
 
-% Scelgo poli per l'osservatore che siano fino a 5 volte più veloci
-P_obs = [
-    dominant_pole * 2,
-    dominant_pole * 3,
-    dominant_pole * 4,
-    dominant_pole * 5
-    ];
+% Simulazione del sistema a ciclo chiuso
+t_span = 0:0.01:10;
 
-% Uso 'place' per trovare L.
-L_luen_t = place(A', C', P_obs);
-L_luen = L_luen_t'; % Matrice di guadagno dell'osservatore
-disp('Guadagno Osservatore (L):');
-disp(L_luen);
+% Condizione iniziale
+x0_sys = [1; 0; 0.3; 0]; 
+x0_obs = [0; 0; 0; 0];  
+x0_total = [x0_sys; x0_obs];
 
-% Verifico la stabilità del sistema
-if is_stabilizable(A, B, K, tol) < tol && is_detectable(C, A, L_luen, tol)
-    disp('Il sistema a ciclo chiuso è stabile.')
-else
-    error('Il sistema a ciclo chiuso non è stabile!')
-end
+% Definizione della dinamica completa
+dynamics = @(t, z) closed_loop_dynamics(t, z, A, B, C, K, L);
 
-% Simulo il sistema completo (Regolatore + Osservatore)
-simulate_system(A, B, C, K, L_luen)
+[t, z] = ode45(dynamics, t_span, x0_total);
 
-% CASO RUMOROSO
-% Definiamo le caratteristiche del rumore
-B_w = B; 
+% Estrazione stati
+x_real = z(:, 1:4); % Stati veri
+x_hat = z(:, 5:8); % Stati stimati
 
-% Covarianza del Rumore di Processo (W) e di Misura (V)
-W = 0.1;  % Intensità del disturbo sul processo
-V = diag([0.001, 0.001]); % Rumore dei sensori
-
-% Verifico la stabilità del sistema
-if is_stabilizable(A, B_w, K, tol) < tol && is_detectable(C, A, L_kalm, tol)
-    disp('Il sistema a ciclo chiuso è stabile.')
-else
-    error('Il sistema a ciclo chiuso non è stabile!')
-end
-
-% Calcolo del guadagno L ottimo (dualità con Kalman)
-[L_kalm_t, ~, ~] = lqr(A', C', B_w*W*B_w', V);
-L_kalm = L_kalm_t'; 
-disp('Guadagno Filtro di Kalman (L):');
-disp(L_kalm);
-
-% Simulo il sistema completo con rumore
-simulate_noisy_system(A, B, C, K, L_kalm, B_w, W, V)
+% Plot dello stato
+plot_state(x_real, x_hat, t)

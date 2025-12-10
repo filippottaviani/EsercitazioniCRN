@@ -1,39 +1,21 @@
-% Questa funzione disegna i grafici della simulazione
-function plot_state(x_real, x_hat, t, err)
+function plot_state(x_real, x_hat, t)
     graphics_toolkit("gnuplot"); # fix per i grafici
+    figure('Name', 'Regolazione dall uscita del pendolo linearizzato');
 
-    % Plot confronto reale vs stimato
-    figure(1);
-    subplot(2, 2, 1);
-    plot(t, x_real(:, 1), 'b', t, x_hat(:, 1), 'b--');
-    title('Posizione (x)');
-    legend('Reale', 'Stimato');
+    subplot(1,2,1);
+    plot(t, x_real(:,1), 'b', 'LineWidth', 1.5); 
+    hold on;
+    plot(t, x_real(:,3), 'r', 'LineWidth', 1.5);
+    title('Stati del sistema');
+    xlabel('Tempo [s]');
+    ylabel('Stato');
+    legend('x_{c}', '\theta_p');
     grid on;
 
-    subplot(2, 2, 2);
-    plot(t, x_real(:, 2), 'r', t, x_hat(:, 2), 'r--');
-    title('Velocità (x\_dot)');
-    legend('Reale', 'Stimato');
-    grid on;
-
-    subplot(2, 2, 3);
-    plot(t, x_real(:, 3), 'g', t, x_hat(:, 3), 'g--');
-    title('Angolo (theta)');
-    legend('Reale', 'Stimato');
-    grid on;
-
-    subplot(2, 2, 4);
-    plot(t, x_real(:, 4), 'k', t, x_hat(:, 4), 'k--');
-    title('Vel. Angolare (theta\_dot)');
-    legend('Reale', 'Stimato');
-    grid on;
-
-    % Plot errore di stima
-    figure(2);
-    plot(t, err(:, 1), t, err(:, 2), t, err(:, 3), t, err(:, 4));
-    title('Errore di Stima (e = x - x_hat)');
-    xlabel('Tempo (s)');
-    ylabel('Valore');
-    legend('e(x)', 'e(x\_dot)', 'e(theta)', 'e(theta\_dot)');
+    subplot(1,2,2);
+    plot(t, x_real(:,3) - x_hat(:,3), 'k', 'LineWidth', 1.5);
+    title('Errore di stima angolo');
+    xlabel('Tempo [s]');
+    ylabel('Errore [rad]');
     grid on;
 end
