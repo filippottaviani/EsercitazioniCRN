@@ -38,11 +38,11 @@ else
     error('ARE non risolvibile: la coppia (A, B) non è controllabile!');
 end
 
-% (A, C) deve essere osservabile
-if is_observable(A, C)
-    disp('La coppia (A, C) è osservabile')
+% (A, C) deve essere rilevabile
+if is_detectable(A, C)
+    disp('La coppia (A, C) è rilevabile')
 else
-    error('ARE non risolvibile: la coppia (A, C) non è osservabile!');
+    error('ARE non risolvibile: la coppia (A, C) non è rilevabile!');
 end
 
 % Progetto del regolatore LQR
