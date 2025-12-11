@@ -43,7 +43,7 @@ disp(P2_num');
 disp('P3:');
 disp(P3_num');
 
-% Calcoliamo la matrice Jacobiana J = df/dx
+% Calcoliamo la matrice jacobiana
 disp('')
 disp('Calcolo matrice jacobiana');
 
@@ -52,8 +52,7 @@ J = jacobian(f, [x1, x2]);
 disp('J(x1, x2) =');
 disp(J);
 
-%% Analizzo e classifico i punti di equilibrio
-disp('')
+% Analizzo e classifico i punti di equilibrio
 disp('Analisi di stabilità per ciascun equilibrio:');
 
 analyze_equilibrium_point(J, x1, x2, P1_num)
@@ -65,7 +64,6 @@ fun_diodo = @(t, x) [
     -R/L * x(1) + 1/L * x(2);
     -1/C * x(1) + alpha/C * x(2) - beta/C * x(2)^3
 ];
-disp('')
-disp('Avvio simulazione e plot del ritratto di fase...');
+disp('Avvio simulazione e plot del ritratto di fase');
 
 plot_vector_field(R, L, C, alpha, beta, P1_num, P2_num, P3_num, fun_diodo)

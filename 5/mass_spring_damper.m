@@ -2,8 +2,8 @@ clc;
 clear all;
 close all;
 
-pkg load control;
-pkg load python3-simpy
+pkg load control
+pkg load symbolic
 
 addpath('5')
 
@@ -44,12 +44,12 @@ cond_iniziali = [
     0, -1.5;
     1.5, 1.5;
     -1.5, -1.5;
-    0.1, 0.1
+    0.5, 0.5
 ];
 
 % Analisi caso 1
-P_linear = [0, 10];
-analyze_system(1, 'Caso 1: Sistema Lineare', J_linear, P_linear);
+P_linear = [0, 0];
+analyze_system(1, 'Sistema Lineare', J_linear, P_linear);
 plot_phase_portrait(1, f_linear, cond_iniziali);
 
 % Analisi caso 2
@@ -58,10 +58,10 @@ P_hard = [
     sqrt(k1/k2), 0;
     -sqrt(k1/k2), 0
 ];
-analyze_system(2, 'Caso 3: Molla "indurente"', J_hard, P_hard);
+analyze_system(2, 'Molla "indurente"', J_hard, P_hard);
 plot_phase_portrait(3, f_hard, cond_iniziali);
 
 % Analisi caso 3
 P_soft = [0, 0];
-analyze_system(3, 'Caso 2: Molla "ammorbidente"', J_soft, P_soft);
+analyze_system(3, 'Molla "ammorbidente"', J_soft, P_soft);
 plot_phase_portrait(2, f_soft, cond_iniziali);

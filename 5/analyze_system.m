@@ -14,16 +14,16 @@ function analyze_system(fig_num, title_str, J_func, P_equilibri)
         disp(['Equilibrio P', num2str(i), ' = (', num2str(P_num(1)), ', ', num2str(P_num(2)), ')']);
         disp('  Jacobiano J(P):');
         disp(J_P);
-        disp('  Autovalori (Poli):');
+        disp('  Autovalori:');
         disp(poli_P');
 
         % Classificazione
         if all(real(poli_P) < 0)
-            disp('  -> STABILE (Nodo/Fuoco Stabile)');
+            disp('  -> STABILE (Nodo/Fuoco stabile)');
             plot(P_num(1), P_num(2), 'go', 'MarkerSize', 10, 'MarkerFaceColor', 'g');
             text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Stabile)'], 'Color', 'g', 'FontWeight', 'bold');
         elseif any(real(poli_P) > 0) && any(real(poli_P) < 0)
-            disp('  -> INSTABILE (Punto di Sella)');
+            disp('  -> INSTABILE (Punto di sella)');
             plot(P_num(1), P_num(2), 'ro', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
             text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Sella)'], 'Color', 'r', 'FontWeight', 'bold');
         else

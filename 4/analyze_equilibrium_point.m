@@ -11,13 +11,13 @@ function analyze_equilibrium_point(J, x1, x2, P_num)
 
     % Classificazione
     if all(real(poli_P) < 0)
-        disp('  -> STABILE (Nodo/Fuoco Stabile)');
+        disp('  -> STABILE (Nodo/Fuoco stabile)');
     elseif all(real(poli_P) > 0)
-        disp('  -> INSTABILE (Nodo/Fuoco Instabile)');
+        disp('  -> INSTABILE (Nodo/Fuoco instabile)');
     elseif any(real(poli_P) > 0) && any(real(poli_P) < 0)
         disp('  -> INSTABILE (Punto di Sella)');
     else
-        disp('  -> Caso critico)');
+        disp('  -> Caso critico');
     end
     disp(' ');
 end
