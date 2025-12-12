@@ -18,7 +18,7 @@ function [dydt, u, x_d] = system_dynamics(t, y, type)
     % Calcolo Errore
     e = x - x_d;
 
-    % Legge di Controllo (Certainty Equivalence)
+    % Legge di controllo
     u = -a_hat * x + dx_d - lambda * e;
 
     % Dinamica del sistema

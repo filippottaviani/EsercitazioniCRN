@@ -21,15 +21,15 @@ function analyze_system(fig_num, title_str, J_func, P_equilibri)
         if all(real(poli_P) < 0)
             disp('  -> STABILE (Nodo/Fuoco stabile)');
             plot(P_num(1), P_num(2), 'go', 'MarkerSize', 10, 'MarkerFaceColor', 'g');
-            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Stabile)'], 'Color', 'g', 'FontWeight', 'bold');
+            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Stabile)'], 'Color', 'k', 'FontWeight', 'bold');
         elseif any(real(poli_P) > 0) && any(real(poli_P) < 0)
             disp('  -> INSTABILE (Punto di sella)');
             plot(P_num(1), P_num(2), 'ro', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
-            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Sella)'], 'Color', 'r', 'FontWeight', 'bold');
+            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Sella)'], 'Color', 'k', 'FontWeight', 'bold');
         else
             disp('  -> INSTABILE (altri casi)');
             plot(P_num(1), P_num(2), 'rx', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
-            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Instabile)'], 'Color', 'r', 'FontWeight', 'bold');
+            text(P_num(1)+0.1, P_num(2), ['P', num2str(i), ' (Instabile)'], 'Color', 'k', 'FontWeight', 'bold');
         end
     end
 end

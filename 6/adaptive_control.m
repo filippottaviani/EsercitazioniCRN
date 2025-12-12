@@ -25,12 +25,12 @@ a_hat0 = 0;        % Stima iniziale del parametro 'a' (può partire da 0)
 initial_state = [x0; a_hat0];
 
 % Stabilizzazione
-disp('Avvio simulazione Scenario 1: Stabilizzazione...');
+disp('Avvio simulazione di stabilizzazione');
 type_ref = 1; % Stabilizzazione
 [t1, y1] = ode45(@(t,y) system_dynamics(t, y, type_ref), t_span, initial_state);
 
 % Inseguimento di traiettoria
-disp('Avvio simulazione Scenario 2: Inseguimento...');
+disp('Avvio simulazione di inseguimento');
 type_ref = 2; % Inseguimento sinusoide
 [t2, y2] = ode45(@(t,y) system_dynamics(t, y, type_ref), t_span, initial_state);
 

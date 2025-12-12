@@ -1,17 +1,18 @@
 function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
+    graphics_toolkit("gnuplot"); # fix per i grafici
     % Stabilizzazione
-    figure(1);
-    subplot(3,1,1);
+    figure(1, 'Stabilizzazione');
+    subplot(1,3,1);
     plot(t1, y1(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t1, xd1, 'k-', 'LineWidth', 1.5);
     grid on;
-    title(' Stabilizzazione - Stato x(t)');
+    title(' Stabilizzazione dello stato x(t)');
     legend('x(t)', 'x_d(t)=0');
     ylabel('Stato');
 
-    subplot(3,1,2);
-    plot(t1, y1(:,2), 'g', 'LineWidth', 2);
+    subplot(1,3,2);
+    plot(t1, y1(:,2), 'r', 'LineWidth', 2);
     hold on;
     plot([min(t1) max(t1)], [a_true a_true], 'k-', 'LineWidth', 1.5);
     grid on;
@@ -19,26 +20,26 @@ function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
     legend('Stima \alpha(t)', 'Vero \alpha'); 
     ylabel('\alpha');
 
-    subplot(3,1,3);
+    subplot(1,3,3);
     plot(t1, u1, 'm', 'LineWidth', 1.5);
     grid on; 
-    title('Ingresso di Controllo u(t)');
+    title('Ingresso di controllo u(t)');
     xlabel('Tempo [s]');
     ylabel('u');
 
     % Inseguimento
-    figure(2);
-    subplot(3,1,1);
+    figure(2, 'Inseguimento');
+    subplot(1,3,1);
     plot(t2, y2(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t2, xd2, 'k-', 'LineWidth', 1.5);
     grid on; 
-    title('Inseguimento - Stato x(t)');
+    title('Inseguimento dello stato x(t)');
     legend('x(t)', 'x_d(t)=sin(t)');
     ylabel('Stato');
 
-    subplot(3,1,2);
-    plot(t2, y2(:,2), 'g', 'LineWidth', 2);
+    subplot(1,3,2);
+    plot(t2, y2(:,2), 'r', 'LineWidth', 2);
     hold on;
     plot([min(t2) max(t2)], [a_true a_true], 'k-', 'LineWidth', 1.5);
     grid on;
@@ -46,10 +47,10 @@ function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
     legend('Stima \alpha(t)', 'Vero \alpha');
     ylabel('\alpha');
 
-    subplot(3,1,3);
+    subplot(1,3,3);
     plot(t2, u2, 'm', 'LineWidth', 1.5);
     grid on;
-    title('Ingresso di Controllo u(t)');
+    title('Ingresso di controllo u(t)');
     xlabel('Tempo [s]');
     ylabel('u');
-endfunction
+end
