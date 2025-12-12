@@ -11,17 +11,17 @@ global a_true lambda gamma
 a_true = 1.5;
 
 % Parametri di progetto del controllore
-lambda = 2.0;      % Velocità di convergenza dell'errore (lambda > 0)
+lambda = 3.0;      % Velocità di convergenza dell'errore
 gamma  = 5.0;      % Guadagno di adattamento
 
 % Parametri di simulazione
-T_sim = 20;
+T_sim = 10;
 dt = 0.01;
 t_span = 0:dt:T_sim;
 
 % Condizioni iniziali
 x0 = 2;            % Stato iniziale del sistema
-a_hat0 = 0;        % Stima iniziale del parametro 'a' (può partire da 0)
+a_hat0 = 0;        % Stima iniziale del parametro 'a'
 initial_state = [x0; a_hat0];
 
 % Stabilizzazione

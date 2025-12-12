@@ -12,38 +12,47 @@ function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)
     draw_robot(x(end), y(end), theta(end), 'k');
     grid on;
     axis equal;
-    title('Traiettoria nel piano XY');
-    legend('Robot', 'Riferimento', 'Start', 'End');
+    title('Inseguimento della traiettoria nel piano');
+    legend('Traiettoria reale', 'Riferimento', 'Inizio', 'Fine');
     xlabel('X [m]');
     ylabel('Y [m]');
 
     % Errori nel tempo
     figure(2);
-    subplot(3,1,1);
+    subplot(1,3,1);
     plot(t, e1, 'LineWidth', 2);
     grid on;
-    ylabel('e_1 (Long)');
-    title('Errori di inseguimento');
-    subplot(3,1,2);
+    ylabel('e_y (Long)');
+    xlabel('Tempo [s]');
+    title('Errore lungo x');
+    
+    subplot(1,3,2);
     plot(t, e2, 'LineWidth', 2);
     grid on;
-    ylabel('e_2 (Lat)');
-    subplot(3,1,3);
+    ylabel('e_x');
+    xlabel('Tempo [s]');
+    title('Errore lungo y');
+
+    subplot(1,3,3);
     plot(t, e3, 'LineWidth', 2);
     grid on;
-    ylabel('e_3 (Ang)');
+    ylabel('e_\theta (Ang)');
     xlabel('Tempo [s]');
+    title('Errore angolare');
 
     % Ingressi di controllo
     figure(3);
-    subplot(2,1,1);
-    plot(t, v_cmd, 'm', 'LineWidth', 1.5);
+    subplot(1,2,1);
+    plot(t, v_cmd, 'm', 'LineWidth', 2);
     grid on;
+    xlabel('Tempo [s]');
     ylabel('v [m/s]');
-    title('Ingressi di Controllo');
-    subplot(2,1,2);
-    plot(t, w_cmd, 'm', 'LineWidth', 1.5);
+    title('Ingresso di controllo v');
+
+    subplot(1,2,2);
+    plot(t, w_cmd, 'm', 'LineWidth', 2);
     grid on;
     ylabel('\omega [rad/s]');
     xlabel('Tempo [s]');
+    title('Ingresso di controllo \omega');
 end
