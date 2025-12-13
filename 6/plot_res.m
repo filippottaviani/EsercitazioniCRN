@@ -1,5 +1,5 @@
 function plot_res(y1, y2, xd1, xd2, t1, t2, u1, u2, a_true)
-    graphics_toolkit("gnuplot"); % try setting gnuplot if available
+    graphics_toolkit("gnuplot"); % fix per i grafici
     % Stabilizzazione
     figure(1);
     set(gcf, 'Name', 'Stabilizzazione', 'NumberTitle', 'off');

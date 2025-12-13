@@ -1,5 +1,5 @@
 function plot_res_joint(t_j, y_j, q_des, T_sim)
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
     figure('Name', 'Controllo nello spazio dei giunti');
     plot(t_j, y_j(:,1), 'b', 'LineWidth', 2);
     hold on;

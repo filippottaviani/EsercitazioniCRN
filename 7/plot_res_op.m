@@ -1,5 +1,5 @@
 function plot_res_op(y, target_pos, t);
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
     % Estrazione coordinate target
     x_des = target_pos(1);
     y_des = target_pos(2);

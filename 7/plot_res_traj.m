@@ -1,4 +1,5 @@
 function plot_res_traj(t, q, dq, q_des, dq_des)
+    graphics_toolkit("gnuplot"); % fix per i grafici
     % Calcolo dell'errore
     e_q = q_des - q;
     e_dq = dq_des -dq;

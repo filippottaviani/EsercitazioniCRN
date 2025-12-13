@@ -1,5 +1,5 @@
 function plot_res_op_traj(t, x_real, x_des, e_x)
-    graphics_toolkit("gnuplot");
+    graphics_toolkit("gnuplot"); % fix per i grafici
     
     figure('Name', 'Inseguimento traiettoria nello spazio operativo');
     

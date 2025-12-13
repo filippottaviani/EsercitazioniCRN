@@ -1,5 +1,5 @@
 function plot_res_adaptive(t, q, dq, theta_hist, q_des, theta_real)
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
 
     % Calcolo errore
     e_q = q_des - q;

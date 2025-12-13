@@ -1,5 +1,5 @@
 function plot_vector_field(R, L, C, alpha, beta, P1_num, P2_num, P3_num, fun_diodo)
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
     
     % Creiamo la griglia per il campo vettoriale (quiver plot)
     [X1_grid, X2_grid] = meshgrid(-3:0.3:3, -3:0.3:3);

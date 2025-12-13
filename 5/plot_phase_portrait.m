@@ -1,5 +1,5 @@
 function plot_phase_portrait(fig_num, f_handle, condizioni_iniziali)
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
     figure(fig_num);
     
     % Creo la griglia per il campo vettoriale

@@ -1,5 +1,5 @@
 function plot_res(x, y, xd, yd, e1, e2, e3, v_cmd, w_cmd, t, theta)
-    graphics_toolkit("gnuplot"); # fix per i grafici
+    graphics_toolkit("gnuplot"); % fix per i grafici
 
     % Traiettoria nel piano XY
     figure(1);
