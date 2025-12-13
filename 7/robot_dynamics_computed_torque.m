@@ -1,4 +1,4 @@
-function dy = robot_dynamics_computed_torque(t, y, A_traj, w_traj)
+function dy = robot_dynamics_computed_torque(t, y, A_traj, w_traj, Kp, Kd)
     y = y(:); 
     q = y(1:2); 
     dq = y(3:4);
@@ -14,11 +14,6 @@ function dy = robot_dynamics_computed_torque(t, y, A_traj, w_traj)
     % Legge di controllo Computed Torque
     e = qd - q;
     de = dqd - dq;
-    
-    % Tuning PD
-    wn = 10; % Banda passante [rad/s]
-    Kp = diag([wn^2, wn^2]);
-    Kd = diag([2*wn, 2*wn]);
     
     % Ingresso ausiliario (doppio integratore stabilizzato)
     u_aux = ddqd + Kd*de + Kp*e;

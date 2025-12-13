@@ -1,4 +1,4 @@
-function plot_res_op(y, target_pos, t);
+function plot_res_op(mode, y, target_pos, t);
     graphics_toolkit("gnuplot"); % fix per i grafici
     % Estrazione coordinate target
     x_des = target_pos(1);
@@ -15,7 +15,13 @@ function plot_res_op(y, target_pos, t);
         x_traj(i,:) = pos';
     end
 
-    figure('Name', 'Controllo nello spazio operativo');
+    if mode == 0
+        figure('Name', 'Controllo nello spazio operativo');
+    elseif mode == 1
+        figure('Name', 'Controllo nello spazio operativo con guadagni tuned');
+    else
+        error('Modalita del plot inesistente')
+    end
     plot(t, x_traj(:,1), 'b', 'LineWidth', 2);
     hold on;
     plot(t, x_traj(:,2), 'r', 'LineWidth', 2);
@@ -25,5 +31,11 @@ function plot_res_op(y, target_pos, t);
     legend('x', 'y', 'x_{target}', 'y_{target}');
     xlabel('Tempo [s]');
     ylabel('Posizione [m]');
-    title('Convergenza alle coordinate cartesiane');
-end
+    
+    if mode == 0
+        title('Convergenza alle coordinate cartesiane');
+    elseif mode == 1
+        title('Convergenza alle coordinate cartesiane con guadagni tuned');
+    else
+        error('Modalita del plot inesistente')
+    end

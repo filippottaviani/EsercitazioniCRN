@@ -1,4 +1,4 @@
-function dy = robot_dynamics_operational(t, y, x_des)
+function dy = robot_dynamics_operational(t, y, x_des, Kp, Kd)
     % Assicuriamoci che y sia un vettore colonna (4x1)
     y = y(:); 
     q = y(1:2); dq = y(3:4);
@@ -14,10 +14,6 @@ function dy = robot_dynamics_operational(t, y, x_des)
     
     % Velocità cartesiana reale
     dx = J * dq;
-    
-    % Guadagni del controllore
-    Kp = diag([500, 500]); 
-    Kd = diag([50, 50]);
     
     % Forza virtuale cartesiana richiesta (2x1)
     F_task = Kp * e_x - Kd * dx;

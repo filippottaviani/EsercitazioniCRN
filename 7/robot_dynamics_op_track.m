@@ -1,4 +1,4 @@
-function dy = robot_dynamics_op_track(t, y, traj_data)
+function dy = robot_dynamics_op_track(t, y, traj_data, Kp, Kd)
     y = y(:);
     q = y(1:2);
     dq = y(3:4);
@@ -24,11 +24,6 @@ function dy = robot_dynamics_op_track(t, y, traj_data)
     % Legge di controllo operativa
     e = xd - x;
     de = dxd - dx;
-    
-    % Tuning PD cartesiano
-    wn = 10; 
-    Kp = diag([wn^2, wn^2]);
-    Kd = diag([2*wn, 2*wn]);
     
     % Accelerazione cartesiana virtuale
     v_cart = ddxd + Kd*de + Kp*e;

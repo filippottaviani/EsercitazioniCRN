@@ -13,6 +13,10 @@ theta = [10.6125; 0.85; 2.25; 1.6; 80.9325; 14.7150];
 geom.l1 = 0.5; % Lunghezza link 1 [m]
 geom.l2 = 0.5; % Lunghezza link 2 [m]
 
+% Guadagni del controllore
+Kp = diag([500, 500]); 
+Kd = diag([50, 50]);
+
 %% CONTROLLO NELLO SPAZIO DEI GIUNTI
 disp('\nRegolazione spazio giunti');
 
@@ -26,7 +30,7 @@ q0_joint = [-pi/2; 0; 0; 0];
 T_sim = 5;
 
 % Chiamata a ode45 per risolvere la dinamica controllata ai giunti
-[t_j, y_j] = ode45(@(t,y) robot_dynamics_joint(t, y, q_des), [0 T_sim], q0_joint);
+[t_j, y_j] = ode45(@(t,y) robot_dynamics_joint(t, y, q_des, Kp, Kd), [0 T_sim], q0_joint);
 
 plot_res_joint(t_j, y_j, q_des, T_sim)
 
@@ -42,10 +46,20 @@ target_pos = [x_des; y_des];
 q0_op = [-pi/2; 0; 0; 0]; 
 
 % Chiamata a ode45 per risolvere la dinamica controllata nello spazio operativo
-[t_op, y_op] = ode45(@(t,y) robot_dynamics_operational(t, y, target_pos), [0 T_sim], q0_op);
+[t_op, y_op] = ode45(@(t,y) robot_dynamics_operational(t, y, target_pos, Kp, Kd), [0 T_sim], q0_op);
 
 % Visualizzazione dei risultati
-plot_res_op(y_op, target_pos, t_op);
+plot_res_op(0, y_op, target_pos, t_op);
+
+%% TUNING DEI GUADAGNI
+omega_des = 10 % Pulsazione naturale desiderata [rad/s]
+zeta_des = 1.0; % Smorzamento desiderato
+
+[Kp_tuned, K_tuned] = gain_tuning(omega_des, zeta_des, q_des)
+
+% Riprovo l'esercitazione precedente con i nuovi guadagni
+[t_op_tune, y_op_tun] = ode45(@(t,y) robot_dynamics_operational(t, y, target_pos, Kp_tuned, K_tuned), [0 T_sim], q0_op);
+plot_res_op(1, y_op_tun, target_pos, t_op);
 
 %% CONTROLLO IN TRAIETTORIA NELLO SPAZIO DEI GIUNTI
 disp('\nInseguimento di traiettorie nello spazio dei giunti con parametri noti');
@@ -62,7 +76,7 @@ x0 = [q0; dq0];
 % Simulazione
 T_sim = 5;
 disp('Avvio simulazione Computed Torque...');
-[t, y] = ode45(@(t,y) robot_dynamics_computed_torque(t, y, A_traj, w_traj), [0 T_sim], x0);
+[t, y] = ode45(@(t,y) robot_dynamics_computed_torque(t, y, A_traj, w_traj, Kp, Kd), [0 T_sim], x0);
 
 % Risultati
 q = y(:, 1:2);
@@ -94,7 +108,7 @@ x0_op_tr = [q0_op_tr; dq0_op_tr];
 
 % Simulazione
 T_sim_op = 10;
-[t_opt, y_opt] = ode45(@(t,y) robot_dynamics_op_track(t, y, traj_data), [0 T_sim_op], x0_op_tr);
+[t_opt, y_opt] = ode45(@(t,y) robot_dynamics_op_track(t, y, traj_data, Kp, Kd), [0 T_sim_op], x0_op_tr);
 
 % Analisi risultati e plot
 x_real = zeros(length(t_opt), 2);
@@ -120,7 +134,7 @@ end
 plot_res_op_traj(t_opt, x_real, x_des_tr, e_x)
 
 %% CONTROLLO ADATTIVO
-disp('Inseguimento adattativo (parametri ignoti)...');
+disp('Inseguimento adattativo');
 
 % Parametri di attrito "reali"
 F_real = [2; 2];

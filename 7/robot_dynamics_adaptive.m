@@ -9,7 +9,7 @@ function dy = robot_dynamics_adaptive(t, y_aug, A_traj, w_traj, Lambda, Gamma, K
     dqd = A_traj .* w_traj .* cos(w_traj*t);
     ddqd = -A_traj .* w_traj.^2 .* sin(w_traj*t);
     
-    % Variabili "sliding" di Slotine-Li ---
+    % Errore
     e = q - qd;
     
     % Velocità e accelerazione di riferimento "virtuali"
