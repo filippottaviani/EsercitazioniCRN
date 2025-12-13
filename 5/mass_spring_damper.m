@@ -8,12 +8,12 @@ pkg load symbolic
 addpath('5')
 
 % Parametri comuni
-M = 1.0;
-k1 = 1.0;
-beta1 = 0.5; % Smorzamento leggero
+M = 1.0; % Massa
+k1 = 1.0; % Termine della molla lineare
+k2 = 1.0; % Termine della molla non lineare
+beta1 = 0.5; % Smorzamento passivo
+beta2 = 1 % Smorzamento attivo
 
-% Parametro non lineare
-k2 = 1.0;     % Termine della molla non lineare
 
 % Caso 1: lineare
 f_linear = @(t, x) [
@@ -35,6 +35,13 @@ f_soft = @(t, x) [
     (1/M) * (-k1*x(1) - k2*x(1)^3 - beta1*x(2))
 ];
 J_soft = @(x) [0, 1; (-k1 - 3*k2*x(1)^2)/M, -beta1/M];
+
+% Caso 4: non lineare (smorzamento attivo)
+f_act_damp = @(t, x) [
+    x(2);
+    (1/M) * (-k1*x(1) + k2*x(1)^3 - beta1*x(2) + beta2*x(2)^3)
+];
+J_act_damp = @(x) [0, 1; (-k1 + 3*k2*x(1)^2)/M, (-beta1 + 3*beta2*x(2)^2)/M];
 
 % Condizioni iniziali
 cond_iniziali = [
@@ -65,3 +72,12 @@ P_hard = [
 ];
 analyze_system(3, 'Molla indurente', J_hard, P_hard);
 plot_phase_portrait(3, f_hard, cond_iniziali);
+
+% Analisi caso 4
+P_act_damp = [
+    0, 0;
+    sqrt(k1/k2), 0;
+    -sqrt(k1/k2), 0
+];
+analyze_system(4, 'Smorzamento attivo', J_act_damp, P_act_damp);
+plot_phase_portrait(4, f_act_damp, cond_iniziali);
