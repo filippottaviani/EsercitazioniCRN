@@ -1,6 +1,5 @@
 function plot_state(x_real, x_hat, t)
     graphics_toolkit("gnuplot"); % fix per i grafici
-    clf
     figure('Name', 'Regolazione dall uscita del pendolo linearizzato');
 
     subplot(1,2,1);

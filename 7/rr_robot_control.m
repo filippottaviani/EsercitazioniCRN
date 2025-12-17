@@ -116,7 +116,7 @@ x_des_tr = zeros(length(t_opt), 2);
 e_x = zeros(length(t_opt), 2);
 
 for i=1:length(t_opt)
-    % Posizione reale (Cinematica Diretta)
+    % Posizione reale (cinematica diretta)
     [pos_real, ~] = get_kinematics(y_opt(i,1:2)');
     x_real(i,:) = pos_real';
     
