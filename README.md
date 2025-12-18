@@ -1,4 +1,4 @@
-# EsercitazioniCRN
+# Esercitazioni CRN
 
 La presente repository raccoglie le esercitazioni MATLAB realizzate nel contesto dell'esame di Controllo Robusto e Nonlineare. Seguono le otto richieste assegnate:
 
